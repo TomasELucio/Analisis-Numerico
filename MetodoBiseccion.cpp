@@ -38,15 +38,15 @@ int main() {
     double longitudIntervalo, tolerancia;
     double dominioInicio = 0.001, dominioFin = 1000.0;  // Definimos el dominio de búsqueda
 
-    /*
-    auto funcion = [](double x) {
-        return -0.874 * x * x + 1.750 * x + 2.627;  
-    }; */
     
+    auto funcion = [](double x) {
+        return -0.874*x*x +1.750*x +2.627;  
+    }; 
+    /*
     auto funcion = [](double x) {
         return log(x) - 5;  
     };
-
+    */
    /*
     auto funcion = [](double x) {
         return exp(-x) - x; //Definición de la función e^(-x) - x
