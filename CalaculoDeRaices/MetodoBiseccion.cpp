@@ -38,7 +38,7 @@ int main() {
     double longitudIntervalo, tolerancia;
     double dominioInicio = 0.001, dominioFin = 1000.0;  // Definimos el dominio de búsqueda
 
-    
+    /*
     auto funcion = [](double x) {
         return -0.874*x*x +1.750*x +2.627;  
     }; 
@@ -47,11 +47,11 @@ int main() {
         return log(x) - 5;  
     };
     */
-   /*
+   
     auto funcion = [](double x) {
-        return exp(-x) - x; //Definición de la función e^(-x) - x
+        return exp(0.1 * x) * sin(x); //Definición de la función e^(-x) - x
     };
-    */
+    
 
     // Solicitar al usuario la longitud del intervalo y la tolerancia de error
     cout << "Método de Bisección para encontrar las raíces de la función ln(x) - 5.\n";
