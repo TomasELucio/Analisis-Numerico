@@ -32,41 +32,15 @@ void punto_fijo_recursivo(function<double(double)> g, double Xi, double tol, int
 }
 
 int main() {
-    cout << "Elige una función predefinida:\n";
-    cout << "1. g(x) = cos(x)\n";
-    cout << "2. g(x) = exp(-x)\n";
-    cout << "3. g(x) = (1 + x) / 2\n";
-    cout << "4. Introducir una función modificar el código.\n";
-    int opcion;
-    cin >> opcion;
+    // Definir la función directamente en el código
+    function<double(double)> g = [](double x) {
+        return (23.330 - 88.090 * x * x + 41.600 * x * x * x - 8.680 * x * x * x * x + 0.658 * x * x * x * x * x) / 79.350;
+    };
 
-    function<double(double)> g;
-
-    switch (opcion) {
-        case 1:
-            g = [](double x) { return cos(x); };
-            break;
-        case 2:
-            g = [](double x) { return exp(-x); };
-            break;
-        case 3:
-            g = [](double x) { return (1 + x) / 2; };
-            break;
-        case 4:
-            g = [](double x) { return exp(5); };
-            break;
-        default:
-            cout << "Opción no válida.\n";
-            return 0;
-    }
-
-    double x0;
-    cout << "Introduce el valor inicial x0: ";
-    cin >> x0;
-
-    double tol;
-    cout << "Introduce la tolerancia (error): ";
-    cin >> tol;
+    // Definir el valor inicial, la tolerancia y el número máximo de iteraciones directamente en el código
+    double x0 = 2.5;    // Valor inicial
+    double tol = 1e-3;  // Tolerancia
+    int max_iter = 100; // Número máximo de iteraciones
 
     // Imprimir la cabecera de la tabla
     cout << setw(10) << "Iteración" 
@@ -75,7 +49,7 @@ int main() {
          << setw(15) << "Error" << endl;
 
     // Ejecutar el método de punto fijo recursivo
-    punto_fijo_recursivo(g, x0, tol, 1, 100);
+    punto_fijo_recursivo(g, x0, tol, 1, max_iter);
 
     return 0;
 }

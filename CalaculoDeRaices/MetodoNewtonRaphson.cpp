@@ -6,7 +6,7 @@ using namespace std; // Usar el espacio de nombres estándar
 double newtonRaphson(double x0, double tolerancia, int maxIter);
 
 int main() {
-    double x0 = 9; // Valor inicial similar al ejemplo de la tabla
+    double x0 = 6; // Valor inicial similar al ejemplo de la tabla
     double tolerancia = 0.001; // Tolerancia para la convergencia
     int maxIter = 100; // Número máximo de iteraciones
     
@@ -18,12 +18,12 @@ int main() {
 
 // Definir la función de la cual queremos encontrar la raíz
 double funcion(double x) {
-    return exp(0.1*x) * sin(x); // Ejemplo: f(x) = e^(-x) - x
+    return log(x)*sin(x); // Ejemplo: f(x) = e^(-x) - x
 }
 
 // Definir la derivada de la función
 double derivada(double x) {
-    return exp(0.1*x) * (0.1 * sin(x) + cos(x)); // Ejemplo: f'(x) = -e^(-x) - 1
+    return (1/x)*sin(x)+log(x)*cos(x); // Ejemplo: f'(x) = -e^(-x) - 1
 }
 // Implementación del método de Newton-Raphson con tabla de iteraciones
 double newtonRaphson(double x0, double tolerancia, int maxIter) {

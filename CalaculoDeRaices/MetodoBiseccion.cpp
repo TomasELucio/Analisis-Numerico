@@ -36,7 +36,7 @@ double biseccion(const function<double(double)>& funcion, double a, double b, do
 
 int main() {
     double longitudIntervalo, tolerancia;
-    double dominioInicio = 0.001, dominioFin = 1000.0;  // Definimos el dominio de búsqueda
+    double dominioInicio = 0, dominioFin = 1000.0;  // Definimos el dominio de búsqueda
 
     /*
     auto funcion = [](double x) {
@@ -49,7 +49,7 @@ int main() {
     */
    
     auto funcion = [](double x) {
-        return exp(0.1 * x) * sin(x); //Definición de la función e^(-x) - x
+        return log(x)*sin(x);
     };
     
 
