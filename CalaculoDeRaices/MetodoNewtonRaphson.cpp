@@ -1,14 +1,14 @@
 #include <iostream>
 #include <cmath>
-#include <iomanip> // Para controlar la precisión de la salida
+#include <iomanip> /
 
-using namespace std; // Usar el espacio de nombres estándar
+using namespace std; 
 double newtonRaphson(double x0, double tolerancia, int maxIter);
 
 int main() {
-    double x0 = 6; // Valor inicial similar al ejemplo de la tabla
-    double tolerancia = 0.001; // Tolerancia para la convergencia
-    int maxIter = 100; // Número máximo de iteraciones
+    double x0 = -2; 
+    double tolerancia = 0.0001; 
+    int maxIter = 100; 
     
     double raiz = newtonRaphson(x0, tolerancia, maxIter);
     cout << "Aproximación de la raíz: " << raiz << endl;
@@ -16,21 +16,19 @@ int main() {
     return 0;
 }
 
-// Definir la función de la cual queremos encontrar la raíz
+
 double funcion(double x) {
-    return log(x)*sin(x); // Ejemplo: f(x) = e^(-x) - x
+    return 2-((x+2)/exp(x));
 }
 
-// Definir la derivada de la función
 double derivada(double x) {
-    return (1/x)*sin(x)+log(x)*cos(x); // Ejemplo: f'(x) = -e^(-x) - 1
+    return (-1 + (x+2))/exp(x); 
 }
-// Implementación del método de Newton-Raphson con tabla de iteraciones
+
 double newtonRaphson(double x0, double tolerancia, int maxIter) {
     double x = x0;
     int iter = 0;
     
-    // Configurar salida para mostrar números en notación decimal normal con 4 decimales
     cout << fixed << setprecision(4);
 
     // Imprimir encabezado de la tabla

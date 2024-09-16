@@ -34,11 +34,11 @@ void punto_fijo_recursivo(function<double(double)> g, double Xi, double tol, int
 int main() {
     // Definir la función directamente en el código
     function<double(double)> g = [](double x) {
-        return (23.330 - 88.090 * x * x + 41.600 * x * x * x - 8.680 * x * x * x * x + 0.658 * x * x * x * x * x) / 79.350;
+        return exp(-x);
     };
 
     // Definir el valor inicial, la tolerancia y el número máximo de iteraciones directamente en el código
-    double x0 = 2.5;    // Valor inicial
+    double x0 = 4;    // Valor inicial
     double tol = 1e-3;  // Tolerancia
     int max_iter = 100; // Número máximo de iteraciones
 

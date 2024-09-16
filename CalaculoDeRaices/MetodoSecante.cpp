@@ -6,7 +6,7 @@ using namespace std; // Usar el espacio de nombres estándar
 
 // Definir la función de la cual queremos encontrar la raíz
 double funcion(double x) {
-    return exp(-0.5*x)*sin(x); // Ejemplo: f(x) = e^(-x) - x
+    return exp(-x)-x; // Ejemplo: f(x) = e^(-x) - x
 }
 
 // Implementación del método de la secante con tabla de iteraciones
@@ -41,7 +41,7 @@ double metodoSecante(double x0, double x1, double tolerancia, int maxIter) {
 
         // Imprimir fila de la tabla
         cout << setw(5) << iter 
-             << setw(10) << x1 
+             << setw(10) << x0 
              << setw(10) << fx1;
         
         if (iter == 0) {
@@ -68,9 +68,9 @@ double metodoSecante(double x0, double x1, double tolerancia, int maxIter) {
 }
 
 int main() {
-    double x0 = 9; // Primer valor inicial
-    double x1 = 11; // Segundo valor inicial
-    double tolerancia = 0.001; // Tolerancia para la convergencia
+    double x0 = 0.400; // Primer valor inicial
+    double x1 = 0.8; // Segundo valor inicial
+    double tolerancia = 0.0001; // Tolerancia para la convergencia
     int maxIter = 100; // Número máximo de iteraciones
     
     double raiz = metodoSecante(x0, x1, tolerancia, maxIter);
