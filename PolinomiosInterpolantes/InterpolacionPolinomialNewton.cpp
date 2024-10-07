@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <sstream>
+#include <cmath>
 
 using namespace std;
 
@@ -26,17 +28,60 @@ vector<vector<double>> diferenciasDivididas(const vector<double>& x, const vecto
 
 // Función para construir el polinomio de interpolación de Newton (f_n(x))
 string construirPolinomioNewton(const vector<double>& x, const vector<vector<double>>& tabla) {
-    string polinomio = to_string(tabla[0][0]);  // Primer coeficiente a0
+    ostringstream polinomio;
+    polinomio << tabla[0][0];  // Primer coeficiente a0
 
     // Construir el polinomio f_n(x)
     for (int i = 1; i < x.size(); ++i) {
-        polinomio += " + (" + to_string(tabla[0][i]) + ")";  // Coeficiente a_i
+        polinomio << " + (" << tabla[0][i] << ")";
         for (int j = 0; j < i; ++j) {
-            polinomio += "(x - " + to_string(x[j]) + ")";  // Términos (x - x_j)
+            polinomio << "(x - " << x[j] << ")";
         }
     }
 
-    return polinomio;
+    return polinomio.str();
+}
+
+// Función para evaluar el polinomio en un punto dado
+double evaluarPolinomio(const vector<double>& coeficientes, const vector<double>& x, double valor) {
+    double resultado = coeficientes[0];
+    double termino = 1.0;
+
+    for (int i = 1; i < coeficientes.size(); ++i) {
+        termino *= (valor - x[i - 1]);
+        resultado += coeficientes[i] * termino;
+    }
+
+    return resultado;
+}
+
+// Función para construir y mostrar el polinomio reducido
+void mostrarPolinomioReducido(const vector<double>& x, const vector<vector<double>>& tabla) {
+    vector<double> coeficientes(x.size());
+
+    for (int i = 0; i < x.size(); ++i) {
+        coeficientes[i] = tabla[0][i];
+    }
+
+    cout << "Polinomio reducido a la mínima expresión:" << endl;
+
+    for (int i = 0; i < coeficientes.size(); ++i) {
+        if (fabs(coeficientes[i]) > 1e-9) {
+            if (i > 0 && coeficientes[i] > 0) {
+                cout << " + ";
+            } else if (coeficientes[i] < 0) {
+                cout << " - ";
+            }
+            cout << fabs(coeficientes[i]);
+            if (i > 0) {
+                cout << "x";
+                if (i > 1) {
+                    cout << "^" << i;
+                }
+            }
+        }
+    }
+    cout << endl;
 }
 
 int main() {
@@ -59,6 +104,9 @@ int main() {
     // Construir y mostrar el polinomio f_n(x)
     string polinomio = construirPolinomioNewton(x, tabla);
     cout << "El polinomio f_n(x) es: f_n(x) = " << polinomio << endl;
+
+    // Mostrar el polinomio reducido a la mínima expresión
+    mostrarPolinomioReducido(x, tabla);
 
     return 0;
 }

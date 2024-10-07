@@ -2,7 +2,7 @@
 import numpy as np
 import sympy as sp
 
-def diferencia_tres_puntos_funcion(funcion, a, b, h):
+def diferencia_cinco_puntos_funcion(funcion, a, b, h):
     """
     Método de diferenciación numérica utilizando la fórmula de tres puntos para una función.
     
@@ -17,37 +17,37 @@ def diferencia_tres_puntos_funcion(funcion, a, b, h):
     y_vals = [funcion(x) for x in x_vals]
     
     
-    dy = diferencia_tres_puntos(x_vals, y_vals)
+    dy = diferencia_cinco_puntos(x_vals, y_vals,h)
     return x_vals, dy
 
-def diferencia_tres_puntos(x, y):
+def diferencia_cinco_puntos(x, y, h):
     """
-    Método de diferenciación numérica utilizando la fórmula de tres puntos hacia adelante, hacia atrás y centrada.
+    Método de diferenciación numérica utilizando la fórmula de cinco puntos hacia adelante, centrada y hacia atrás.
     
     :param x: Lista o array de valores de x.
     :param y: Lista o array de valores de la función evaluada en cada valor de x.
+    :param h: Paso de la discretización.
     :return: Lista de valores de la derivada aproximada.
     """
     if len(x) != len(y):
         raise ValueError("Las longitudes de x e y deben ser iguales")
     
-
     n = len(x)
-    h = x[1] - x[0]  
     dy = np.zeros(n)
     
-    # Aplicar la fórmula de tres puntos hacia adelante para el primer punto
-    dy[0] = (-25 * y[0] + 48 * y[1] - 36 * y[2] + 16 * y [3] - 3 * y[4]) / (12 * h)
+    # Fórmula de cinco puntos hacia adelante para los primeros dos puntos
+    dy[0] = (-25 * y[0] + 48 * y[1] - 36 * y[2] + 16 * y[3] - 3 * y[4]) / (12 * h)
+    dy[1] = (-25 * y[1] + 48 * y[2] - 36 * y[3] + 16 * y[4] - 3 * y[5]) / (12 * h)
 
-    # Aplicar la fórmula de tres puntos centrada para los puntos internos
-    for i in range(1, n - 1):
-        dy[i] = (y[i + 1] - 8 * y[i] + 8 * y[i] - y[i - 1]) / (12 * h)
+    # Fórmula de cinco puntos centrada para los puntos internos
+    for i in range(2, n - 2):
+        dy[i] = (y[i-2] - 8 * y[i-1] + 8 * y[i+1] - y[i+2]) / (12 * h)
     
-    # Aplicar la fórmula de tres puntos hacia atrás para el último punto
-    dy[-1] = (3 * y[4] - 16 * y[3] + 36 * y[2] - 48 * y[1] + 25 * y[0]) / (12 * h)
+    # Fórmula de cinco puntos hacia atrás para los últimos dos puntos
+    dy[-2] = (3 * y[-6] - 16 * y[-5] + 36 * y[-4] - 48 * y[-3] + 25 * y[-2]) / (12 * h)
+    dy[-1] = (3 * y[-5] - 16 * y[-4] + 36 * y[-3] - 48 * y[-2] + 25 * y[-1]) / (12 * h)
     
     return dy
-
 
 opcion = input("Ingresa 1 o 2: ")
     
@@ -67,7 +67,7 @@ if(opcion == "1"):
     h = 0.1     # Tamaño del paso
 
     # Calcular la derivada numérica
-    x_vals, derivadas_aprox = diferencia_tres_puntos_funcion(funcion, a, b, h)
+    x_vals, derivadas_aprox = diferencia_cinco_puntos_funcion(funcion, a, b, h)
 
     # Calcular la derivada exacta y el error
     derivadas_exactas = [derivada(xi) for xi in x_vals]
@@ -75,12 +75,13 @@ if(opcion == "1"):
 
         
 elif(opcion == "2"):
+    h = 0.1
     x_vals = [0 , 0.5 , 1 , 1.5 , 2]
     y_vals = [0, 0.4207 , 0.4546 , 0.0706 , -0.3784]
     if len(x_vals) != len(y_vals):
         raise ValueError("Las longitudes de x e y deben ser iguales")
 
-    derivadas_aprox = diferencia_tres_puntos(x_vals,y_vals)
+    derivadas_aprox = diferencia_cinco_puntos(x_vals,y_vals,h)
         
     # Como no tenemos una función exacta, no se calculará el error
     derivadas_exactas = [None] * len(x_vals)
