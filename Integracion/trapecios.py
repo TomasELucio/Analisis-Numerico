@@ -14,16 +14,26 @@ tramos = 10
 h = (b-a)/tramos
 xi = a
 suma = fx(xi)
-for i in range(0,tramos-1,1):
-    xi = xi + h
-    suma += 2*fx(xi)
+# Imprimir encabezado
+print(f'{"Paso":<5} {"xi":<10} {"f(xi)":<15} {"Suma parcial":<15}')
+print(f'{0:<5} {xi:<10.4f} {fx(xi):<15.8f} {suma:<15.8f}')
+
+# Ciclo de integración por trapecios
+for i in range(1, tramos):
+    xi += h
+    suma += 2 * fx(xi)
+    # Imprimir valores en cada paso
+    print(f'{i:<5} {xi:<10.4f} {fx(xi):<15.8f} {suma:<15.8f}')
+
 suma += fx(b)
-area = h*(suma/2)
+area = h * (suma / 2)
 
-# SALIDA
-print('tramos: ', tramos)
+# Imprimir el último paso
+print(f'{tramos:<5} {b:<10.4f} {fx(b):<15.8f} {suma:<15.8f}')
+
+# Resultado final
+print('Tramos: ', tramos)
 print('Integral: ', area)
-
 # GRAFICA
 # Puntos de muestra
 muestras = tramos + 1
