@@ -3,66 +3,69 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # INGRESO:
-fx = lambda x: 8 + 5 * np.cos(x)
+fx = lambda x: np.exp(x) * np.sin(5 * x)
 
 # intervalo de integración
 a = 0
-b = np.pi
-tramos = 10
+b = 2 * np.pi 
+tramos = 12
 
 # Validar cantidad de tramos pares
-esimpar = tramos%2
-while (esimpar == 1):
-    print('tramos: ',tramos)
+esimpar = tramos % 2
+while esimpar == 1:
+    print('tramos: ', tramos)
     tramos = int(input('tramos debe ser par: '))
-    esimpar = tramos%2
+    esimpar = tramos % 2
 
 # PROCEDIMIENTO
 # Regla de Simpson 1/3
-h = (b-a)/tramos
+h = (b - a) / tramos
 xi = a
 area = 0
-for i in range(0,tramos,2):
-    deltaA = (h/3)*(fx(xi)+4*fx(xi+h)+fx(xi+2*h))
+print("Iteración | deltaA             | Área acumulada")
+print("----------|--------------------|----------------")
+for i in range(0, tramos, 2):
+    deltaA = (h / 3) * (fx(xi) + 4 * fx(xi + h) + fx(xi + 2 * h))
     area = area + deltaA
-    xi = xi + 2*h
+    print(f"{i//2 + 1:^10} | {deltaA:^18.10f} | {area:^16.10f}")
+    xi = xi + 2 * h
 
 # SALIDA
-print('tramos:', tramos)
+print('\ntramos:', tramos)
 print('Integral: ', area)
 
 # GRAFICA
 # fx muestras por tramo
 muestras = tramos + 1
-xi = np.linspace(a,b,muestras)
+xi = np.linspace(a, b, muestras)
 fi = fx(xi)
-fi0 = np.zeros(muestras) # linea base
+fi0 = np.zeros(muestras)  # línea base
 
 # fx suave aumentando muestras
-muestrasfxSuave = 4*tramos + 1
-xk = np.linspace(a,b,muestrasfxSuave)
+muestrasfxSuave = 4 * tramos + 1
+xk = np.linspace(a, b, muestrasfxSuave)
 fk = fx(xk)
 
 # Relleno
-for i in range(0,muestras-1,2):
+for i in range(0, muestras - 1, 2):
     relleno = 'lightgreen'
-    if (i/2)%2==0: # i/2 par
-        relleno ='lightblue'
-    xktramo = xk[i*4:(i+2)*4+1]
-    fktramo = fk[i*4:(i+2)*4+1]
-    plt.fill_between(xktramo,fktramo,fktramo*0,color=relleno)
+    if (i / 2) % 2 == 0:  # i/2 par
+        relleno = 'lightblue'
+    xktramo = xk[i * 4:(i + 2) * 4 + 1]
+    fktramo = fk[i * 4:(i + 2) * 4 + 1]
+    plt.fill_between(xktramo, fktramo, fktramo * 0, color=relleno)
 
-# Funcion f(x)
-plt.plot(xk,fk, label='f(x)')
-plt.plot(xi,fi,'o', label='f(xi)')
-         
+# Función f(x)
+plt.plot(xk, fk, label='f(x)')
+plt.plot(xi, fi, 'o', label='f(xi)')
+
 # Divisiones entre Simpson 1/3
-for i in range(0,muestras,1):
+for i in range(0, muestras, 1):
     tipolinea = 'dotted'
-    if i%2==0: # i par
+    if i % 2 == 0:  # i par
         tipolinea = 'dashed'
-    plt.vlines(xi[i],fi0[i],fi[i],
-                 linestyle=tipolinea)
+    plt.vlines(xi[i], fi0[i], fi[i],
+               linestyle=tipolinea)
 
 plt.axhline(0)
 plt.xlabel('x')
