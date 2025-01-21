@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-def punto_fijo(g, x0, tol=1e-5, max_iter=100):
+def punto_fijo(g, x0, tol=1e-4, max_iter=100):
     # Inicializar valores
     x_prev = x0
     tabla = []
@@ -27,10 +27,10 @@ def punto_fijo(g, x0, tol=1e-5, max_iter=100):
 
 # Definir la función g(x) tal que x = g(x)
 def g(x):
-    return np.cos(x)
+    return np.exp(-x)
 
 # Valor inicial
-x0 = 0.5
+x0 = 0.4
 
 # Ejecutar el método de punto fijo
 tabla_resultados = punto_fijo(g, x0)
